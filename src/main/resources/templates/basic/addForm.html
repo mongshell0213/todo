@@ -17,19 +17,28 @@
         <h2>할 일 등록 폼</h2>
     </div>
     <h4 class="mb-3">할 일 입력</h4>
-    <form action="item.html" th:action method="post">
+    <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <label for="work">할 일</label>
-            <input type="text" id="work" name="work" class="formcontrol" placeholder="할 일을 입력하세요">
+            <input type="text" th:field="*{work}" class="form-control" placeholder="할 일을 입력하세요">
         </div>
         <div>
             <label for="endDate">기한</label>
-            <input type="datetime-local" id="endDate" name="endDate" class="form-control"
+            <input type="datetime-local" id="endDate" th:field="*{endDate}" class="form-control"
                    placeholder="기한을 입력하세요">
         </div>
         <div>
-            <label for="memoFinish">완료 여부</label>
-            <input type="text" id="memoFinish" name="memoFinish" class="formcontrol" placeholder="완료 여부를 입력하세요">
+            <div>완료 여부</div>
+            <div th:each="type : ${finishTypes}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{finishType}" th:value="${type.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('finishType')}" th:text="${type.description}" class="form-check-label">
+                    완료
+                </label>
+            </div>
+        </div>
+        <div>
+            <label for="note">비고</label>
+            <textarea th:field="*{note}" class="form-control"></textarea>
         </div>
         <hr class="my-4">
         <div class="row">

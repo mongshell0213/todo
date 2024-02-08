@@ -20,7 +20,7 @@ public class ItemRepositoryTest {
     @Test
     public void saveTest(){
         //give
-        Item item = new Item("숙제","2024.01.20","미완");
+        Item item = new Item("숙제","2024.01.20","미완",null);
         itemRepository.save(item);
 
         //when
@@ -33,7 +33,7 @@ public class ItemRepositoryTest {
     @Test
     public void findByIdTest(){
         //give
-        Item item = new Item("숙제","2024.01.20","미완");
+        Item item = new Item("숙제","2024.01.20","미완",null);
         itemRepository.save(item);
 
         //when
@@ -48,8 +48,8 @@ public class ItemRepositoryTest {
     @Test
     public void findAllTest(){
         //give
-        Item item1 = new Item("숙제1","2024.01.20","미완");
-        Item item2 = new Item("숙제2","2024.01.20","미완");
+        Item item1 = new Item("숙제1","2024.01.20","미완",null);
+        Item item2 = new Item("숙제2","2024.01.20","미완",null);
         itemRepository.save(item1);
         itemRepository.save(item2);
 
@@ -64,24 +64,24 @@ public class ItemRepositoryTest {
     @Test
     public void updateTest(){
         //give
-        Item item = new Item("숙제1","2024.01.20","미완");
+        Item item = new Item("숙제1","2024.01.20","미완",null);
         itemRepository.save(item);
 
         //when
-        Item updateItem = new Item("숙제1","2024.01.24","완");
+        Item updateItem = new Item("숙제1","2024.01.24","완",null);
         itemRepository.update(item.getId(),updateItem);
 
         //then
         assertThat(item.getWork()).isEqualTo(updateItem.getWork());
         assertThat(item.getEndDate()).isEqualTo(updateItem.getEndDate());
-        assertThat(item.getMemoFinish()).isEqualTo(updateItem.getMemoFinish());
+        assertThat(item.getFinishType()).isEqualTo(updateItem.getFinishType());
 
     }
 
     @Test
     public void deleteTest(){
         //give
-        Item item = new Item("숙제1","2024-01-20","미완");
+        Item item = new Item("숙제1","2024-01-20","미완",null);
         itemRepository.save(item);
         //when
         itemRepository.delete(item.getId());

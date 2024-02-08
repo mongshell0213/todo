@@ -32,9 +32,14 @@
                value="2024.01.24" th:value="${item.endDate}" readonly>
     </div>
     <div>
-        <label for="memoFinish">미완</label>
-        <input type="text" id="memoFinish" name="memoFinish" class="form-control"
-               value="완" th:value="${item.memoFinish}" readonly>
+        <label for="finishType">완료 여부</label>
+        <input type="text" id="finishType" name="finishType" class="form-control"
+               value="완" th:value="${item.finishType}" readonly>
+    </div>
+    <div>
+        <label for="note">비고</label>
+        <input type="text" id="note" name="note" class="form-control"
+               th:value="${item.note}" readonly>
     </div>
     <hr class="my-4">
     <div class="row">

@@ -16,24 +16,33 @@
     <div class="py-5 text-center">
         <h2>할 일 수정 폼</h2>
     </div>
-    <form action="item.html" th:action method="post">
+    <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <label for="id">할 일 ID</label>
-            <input type="text" id="id" name="id" class="form-control" value="1" th:value="${item.id}"
+            <input type="text" th:field="*{id}" class="form-control" value="1"
                    readonly>
         </div>
         <div>
             <label for="work">할 일</label>
-            <input type="text" id="work" name="work" class="formcontrol" value="할 일A" th:value="${item.work}">
+            <input type="text" th:field="*{work}" class="form-control" value="할 일A" >
         </div>
         <div>
             <label for="endDate">기한</label>
-            <input type="date" id="endDate" name="endDate" class="form-control"
-                   value="2024.01.24" th:value="${item.endDate}">
+            <input type="date" th:field="*{endDate}" class="form-control"
+                   value="2024.01.24" >
         </div>
         <div>
-            <label for="memoFinish">완료 여부</label>
-            <input type="text" id="memoFinish" name="memoFinish" class="formcontrol" value="완" th:value="${item.memoFinish}">
+            <div>완료 여부</div>
+            <div th:each="type : ${finishTypes}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{finishType}" th:value="${type.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('finishType')}" th:text="${type.description}" class="form-check-label">
+                    완료
+                </label>
+            </div>
+        </div>
+        <div>
+            <label for="note">비고</label>
+            <textarea th:field="*{note}" class="form-control"></textarea>
         </div>
         <hr class="my-4">
         <div class="row">

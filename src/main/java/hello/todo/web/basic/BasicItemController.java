@@ -1,15 +1,18 @@
 package hello.todo.web.basic;
 
+import hello.todo.domain.FinishType;
 import hello.todo.domain.item.ItemRepository;
 import hello.todo.domain.item.Item;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/basic/items")
 @RequiredArgsConstructor
@@ -43,7 +46,8 @@ public class BasicItemController {
     }
 
     @GetMapping("/add")
-    public String addForm(){
+    public String addForm(Model model){
+        model.addAttribute("item",new Item());
         return "basic/addForm";
     }
 
@@ -60,12 +64,18 @@ public class BasicItemController {
         return "redirect:/basic/items";
     }
 
+    @ModelAttribute("finishTypes")
+    public FinishType[] finishTypes(){
+        FinishType[] values = FinishType.values();
+        return values;
+    }
+
     /**
      * 테스트용 데이터
      */
     @PostConstruct
     public void init(){
-        itemRepository.save(new Item("숙제 1","2024-01-24","미완"));
-        itemRepository.save(new Item("숙제 2","2024-01-28","완"));
+        itemRepository.save(new Item("숙제 1","2024-01-24","NOT_FINISHED",null));
+        itemRepository.save(new Item("숙제 2","2024-01-28","FINISHED","대충 어디 어디 숙제라는 뜻"));
     }
 }

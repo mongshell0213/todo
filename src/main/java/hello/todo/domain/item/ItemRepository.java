@@ -30,7 +30,7 @@ public class ItemRepository {
         Item item = findById(id);
         item.setWork(updated.getWork());
         item.setEndDate(updated.getEndDate());
-        item.setMemoFinish(updated.getMemoFinish());
+        item.setFinishType(updated.getFinishType());
     }
 
     public void delete(Long id){

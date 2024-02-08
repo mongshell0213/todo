@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<html>
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
     <meta charset="utf-8">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -15,19 +15,19 @@
         <h2>할 일 등록 폼</h2>
     </div>
     <h4 class="mb-3">할 일 입력</h4>
-    <form action="item.html" method="post">
+    <form action="item.html" th:action th:object=${item} method="post">
         <div>
-            <label for="itemWork">할 일</label>
-            <input type="text" id="itemWork" name="itemWork" class="formcontrol" placeholder="할 일을 입력하세요">
+            <label for="work">할 일</label>
+            <input type="text" th:field="*{work}" class="form-control" placeholder="할 일을 입력하세요">
         </div>
         <div>
-            <label for="itemEndDate">기한</label>
-            <input type="date" id="itemEndDate" name="itemEndDate" class="form-control"
+            <label for="endDate">기한</label>
+            <input type="date" id="endDate" th:field="*{endDate}"  class="form-control"
                    placeholder="기한을 입력하세요">
         </div>
         <div>
-            <label for="itemMemoFinish">완료 여부</label>
-            <input type="text" id="itemMemoFinish" name="itemMemoFinish" class="formcontrol" placeholder="완료 여부를 입력하세요">
+            <label for="finishType">완료 여부</label>
+            <input type="text" th:field="*{finishType}" class="form-control" placeholder="완료 여부를 입력하세요">
         </div>
         <hr class="my-4">
         <div class="row">
