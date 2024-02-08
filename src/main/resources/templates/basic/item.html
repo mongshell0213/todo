@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <style>
+        .container {
+        max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>할 일 상세</h2>
+    </div>
+    <div>
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" class="form-control"
+               value="1" th:value="${item.id}" readonly>
+    </div>
+    <div>
+        <label for="work">할 일</label>
+        <input type="text" id="work" name="work" class="form-control"
+               value="숙제A" th:value="${item.work}" readonly>
+    </div>
+    <div>
+        <label for="endDate">기한</label>
+        <input type="text" id="endDate" name="endDate" class="form-control"
+               value="2024.01.24" th:value="${item.endDate}" readonly>
+    </div>
+    <div>
+        <label for="memoFinish">미완</label>
+        <input type="text" id="memoFinish" name="memoFinish" class="form-control"
+               value="완" th:value="${item.memoFinish}" readonly>
+    </div>
+    <hr class="my-4">
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/basic/items/{itemId}/edit(itemId=${item.id})}'|"
+                    type="button">수정</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='items.html'"
+                    th:onclick="|location.href='@{/basic/items}'|"
+                    type="button">목록으로</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-tertiary btn-lg"
+                    th:onclick="|location.href='@{|/basic/items/${item.id}/delete|}'|"
+                    type="button">삭제</button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
