@@ -1,4 +1,4 @@
-package hello.todo.web.basic;
+package hello.todo.web.item;
 
 import hello.todo.domain.FinishType;
 import hello.todo.domain.item.ItemRepository;

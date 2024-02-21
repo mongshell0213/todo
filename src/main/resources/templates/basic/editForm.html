@@ -14,25 +14,25 @@
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>할 일 수정 폼</h2>
+        <h2 th:text="#{page.editTodoForm}">할 일 수정 폼</h2>
     </div>
     <form action="item.html" th:action th:object="${item}" method="post">
         <div>
-            <label for="id">할 일 ID</label>
+            <label for="id" th:text="#{label.item.id}">할 일 ID</label>
             <input type="text" th:field="*{id}" class="form-control" value="1"
                    readonly>
         </div>
         <div>
-            <label for="work">할 일</label>
+            <label for="work" th:text="#{label.item.work}">할 일</label>
             <input type="text" th:field="*{work}" class="form-control" value="할 일A" >
         </div>
         <div>
-            <label for="endDate">기한</label>
+            <label for="endDate" th:text="#{label.item.endDate}">기한</label>
             <input type="date" th:field="*{endDate}" class="form-control"
                    value="2024.01.24" >
         </div>
         <div>
-            <div>완료 여부</div>
+            <div for="finishType" th:text="#{label.item.finishType}">완료 여부</div>
             <div th:each="type : ${finishTypes}" class="form-check form-check-inline">
                 <input type="radio" th:field="*{finishType}" th:value="${type.name()}" class="form-check-input">
                 <label th:for="${#ids.prev('finishType')}" th:text="${type.description}" class="form-check-label">
@@ -41,19 +41,19 @@
             </div>
         </div>
         <div>
-            <label for="note">비고</label>
+            <label for="note" th:text="#{label.item.note}">비고</label>
             <textarea th:field="*{note}" class="form-control"></textarea>
         </div>
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">저장</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='item.html'"
                         th:onclick="|location.href='@{|/basic/items/${item.id}|}'|"
-                        type="button">취소</button>
+                        type="button" th:text="#{button.cancel}">취소</button>
             </div>
         </div>
     </form>

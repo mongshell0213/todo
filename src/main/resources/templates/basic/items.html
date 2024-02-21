@@ -16,7 +16,7 @@
             <button class="btn btn-primary float-end"
                     onclick="location.href='addForm.html'"
                     th:onclick="|location.href='@{/basic/items/add}'|"
-                    type="button">할 일 등록
+                    type="button" th:text="#{button.addTodo}">할 일 등록
             </button>
         </div>
     </div>
@@ -25,10 +25,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>할 일</th>
-                <th>기한</th>
-                <th>완료 여부</th>
+                <th th:text="#{label.item.id}">ID</th>
+                <th th:text="#{label.item.work}">할 일</th>
+                <th th:text="#{label.item.endDate}">기한</th>
+                <th th:text="#{label.item.finishType}">완료 여부</th>
             </tr>
             </thead>
             <tbody>

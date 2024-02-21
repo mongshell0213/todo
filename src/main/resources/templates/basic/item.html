@@ -14,30 +14,30 @@
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>할 일 상세</h2>
+        <h2 th:text="#{page.todo}">할 일 상세</h2>
     </div>
     <div>
-        <label for="id">ID</label>
+        <label for="id" th:text="#{label.item.id}">ID</label>
         <input type="text" id="id" name="id" class="form-control"
                value="1" th:value="${item.id}" readonly>
     </div>
     <div>
-        <label for="work">할 일</label>
+        <label for="work" th:text="#{label.item.work}">할 일</label>
         <input type="text" id="work" name="work" class="form-control"
                value="숙제A" th:value="${item.work}" readonly>
     </div>
     <div>
-        <label for="endDate">기한</label>
+        <label for="endDate" th:text="#{label.item.endDate}">기한</label>
         <input type="text" id="endDate" name="endDate" class="form-control"
                value="2024.01.24" th:value="${item.endDate}" readonly>
     </div>
     <div>
-        <label for="finishType">완료 여부</label>
+        <label for="finishType" th:text="#{label.item.finishType}">완료 여부</label>
         <input type="text" id="finishType" name="finishType" class="form-control"
                value="완" th:value="${item.finishType}" readonly>
     </div>
     <div>
-        <label for="note">비고</label>
+        <label for="note" th:text="#{label.item.note}">비고</label>
         <input type="text" id="note" name="note" class="form-control"
                th:value="${item.note}" readonly>
     </div>
@@ -47,18 +47,18 @@
             <button class="w-100 btn btn-primary btn-lg"
                     onclick="location.href='editForm.html'"
                     th:onclick="|location.href='@{/basic/items/{itemId}/edit(itemId=${item.id})}'|"
-                    type="button">수정</button>
+                    type="button" th:text="#{button.edit}">수정</button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='items.html'"
                     th:onclick="|location.href='@{/basic/items}'|"
-                    type="button">목록으로</button>
+                    type="button" th:text="#{button.list}">목록으로</button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-tertiary btn-lg"
                     th:onclick="|location.href='@{|/basic/items/${item.id}/delete|}'|"
-                    type="button">삭제</button>
+                    type="button" th:text="#{button.delete}">삭제</button>
         </div>
     </div>
 </div> <!-- /container -->
