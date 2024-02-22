@@ -17,22 +17,24 @@
 </head>
 <body>
 <div class="container">
-    <form action="member.html" th:action th:object="${member}" method="post">
+    <form action="login-form.html" th:action th:object="${loginForm}" method="post">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}">전체 오류 메시지</p>
+        </div>
         <div>
             <label for="id" th:text="#{label.member.id}">아이디</label>
             <input type="text" th:field="*{id}" class="form-control" th:errorclass="field-error"
                    placeholder="아이디를 입력하세요." th:placeholder="#{input.id.placeholder}">
         </div>
-        <div class="field-error" th:errors="*{id}">아이디 오류</div>
         <div>
             <label for="passWord" th:text="#{label.member.password}">패스워드</label>
             <input type="password" th:field="*{passWord}" class="form-control" th:errorclass="field-error"
                    placeholder="비밀번호를 입력하세요." th:placeholder="#{input.password.placeholder}">
         </div>
-        <div class="field-error" th:errors="*{passWord}">비밀번호 오류</div>
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.member.join}">회원 가입</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.login}">로그인</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"

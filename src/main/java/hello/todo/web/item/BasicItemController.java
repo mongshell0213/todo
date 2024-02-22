@@ -3,6 +3,8 @@ package hello.todo.web.item;
 import hello.todo.domain.FinishType;
 import hello.todo.domain.item.ItemRepository;
 import hello.todo.domain.item.Item;
+import hello.todo.domain.member.Member;
+import hello.todo.web.login.SessionConst;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +22,11 @@ public class BasicItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping
-    public String items(Model model){
+    public String items(@SessionAttribute(name= SessionConst.LOGIN_MEMBER) Member loginMember, Model model){
+        log.info("loginMember={}",loginMember);
         List<Item> itemList = itemRepository.findAll();
         model.addAttribute("items",itemList);
+        model.addAttribute("member",loginMember);
         return "basic/items";
     }
 

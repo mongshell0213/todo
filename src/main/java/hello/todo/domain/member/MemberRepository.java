@@ -2,10 +2,7 @@ package hello.todo.domain.member;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MemberRepository {
@@ -16,8 +13,10 @@ public class MemberRepository {
         return member;
     }
 
-    public Member findById(String id){
-        return store.get(id);
+    public Optional<Member> findById(String id){
+        return findAll().stream()
+                .filter(m->m.getId().equals(id))
+                .findFirst();
     }
 
     public List<Member> findAll(){
@@ -25,7 +24,7 @@ public class MemberRepository {
     }
 
     public void updateMember(String id, Member updated){
-        Member member = findById(id);
+        Member member = findById(id).get();
         member.setId(updated.getId());
         member.setPassWord(updated.getPassWord());
     }

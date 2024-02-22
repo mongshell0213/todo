@@ -8,6 +8,12 @@
 </head>
 <body>
 <div class="container" style="max-width: 600px">
+    <h4 class="mb-3" th:text="|로그인: ${member.id}|">로그인 멤버 아이디</h4>
+    <div>
+        <form th:action="@{/logout}" method="post" >
+            <button type="submit">로그아웃</button>
+        </form>
+    </div>
     <div class="py-5 text-center">
         <h2>to do list</h2>
     </div>
