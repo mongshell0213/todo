@@ -1,5 +1,7 @@
 package hello.todo.domain.item;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +14,11 @@ import lombok.Setter;
 @Getter @Setter
 public class Item {
     private Long id;
+    @NotBlank
     private String work;
+    @NotBlank
     private String endDate;
+    @NotNull(message = "여부를 지정해주세요.")
     private String finishType;
     private String note; //비고란
 

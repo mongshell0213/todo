@@ -9,6 +9,10 @@
         .container {
         max-width: 560px;
         }
+        .field-error{
+            border-color: #dc3545;
+            color : #dc3545
+        }
     </style>
 </head>
 <body>
@@ -20,22 +24,25 @@
     <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <label for="work" th:text="#{label.item.work}">할 일</label>
-            <input type="text" th:field="*{work}" class="form-control"
+            <input type="text" th:field="*{work}" class="form-control" th:errorclass="field-error"
                    placeholder="할 일을 입력하세요" th:placeholder="#{input.work.placeholder}">
         </div>
+        <div class="field-error" th:errors="*{work}"></div>
         <div>
             <label for="endDate" th:text="#{label.item.endDate}">기한</label>
-            <input type="datetime-local" id="endDate" th:field="*{endDate}" class="form-control"
+            <input type="datetime-local" id="endDate" th:field="*{endDate}" class="form-control" th:errorclass="field-error"
                    placeholder="기한을 입력하세요" th:placeholder="#{input.endDate.placeholder}">
         </div>
+        <div class="field-error" th:errors="*{endDate}"></div>
         <div>
             <div th:text="#{label.item.finishType}">완료 여부</div>
             <div th:each="type : ${finishTypes}" class="form-check form-check-inline">
-                <input type="radio" th:field="*{finishType}" th:value="${type.name()}" class="form-check-input">
+                <input type="radio" th:field="*{finishType}" th:value="${type.name()}" class="form-check-input" th:errorclass="field-error">
                 <label th:for="${#ids.prev('finishType')}" th:text="${type.description}" class="form-check-label">
                     완료
                 </label>
             </div>
+            <div class="field-error" th:errors="*{finishType}"></div>
         </div>
         <div>
             <label for="note" th:text="#{label.item.note}">비고</label>

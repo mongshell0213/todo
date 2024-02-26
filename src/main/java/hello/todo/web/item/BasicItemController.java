@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class BasicItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping
-    public String items(@SessionAttribute(name= SessionConst.LOGIN_MEMBER) Member loginMember, Model model){
+    public String items(@SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
         log.info("loginMember={}",loginMember);
         List<Item> itemList = itemRepository.findAll();
         model.addAttribute("items",itemList);
@@ -44,8 +46,11 @@ public class BasicItemController {
         return "basic/editForm";
     }
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @ModelAttribute Item item){
+    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute Item item
+            ,BindingResult result){
         itemRepository.update(itemId,item);
+        if(result.hasErrors())
+            return "basic/editForm";
         return "redirect:/basic/items/{itemId}";
     }
 
@@ -56,7 +61,9 @@ public class BasicItemController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute Item item){
+    public String add(@Validated @ModelAttribute Item item, BindingResult result){
+        if(result.hasErrors())
+            return "basic/addForm";
         itemRepository.save(item);
         return "redirect:/basic/items/"+item.getId(); //PRG 패턴 도입
         //return "basic/item"; //새로고침시 post가 재전송되는 문제
