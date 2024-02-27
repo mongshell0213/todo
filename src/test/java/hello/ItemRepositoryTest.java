@@ -5,6 +5,7 @@ import hello.todo.domain.item.ItemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,7 +21,10 @@ public class ItemRepositoryTest {
     @Test
     public void saveTest(){
         //give
-        Item item = new Item("숙제","2024.01.20","미완",null);
+        //Item item = new Item("숙제","2024.01.20","미완",null);
+
+        LocalDateTime localDateTime = LocalDateTime.of(2019, 11, 12, 12, 32, 22, 3333);
+        Item item = new Item("숙제",localDateTime,"미완",null);
         itemRepository.save(item);
 
         //when
@@ -30,10 +34,12 @@ public class ItemRepositoryTest {
         assertThat(item).isEqualTo(savedItem);
     }
 
+
     @Test
     public void findByIdTest(){
         //give
-        Item item = new Item("숙제","2024.01.20","미완",null);
+        LocalDateTime localDateTime1 = LocalDateTime.of(2024, 02, 27, 12, 32);
+        Item item = new Item("숙제",localDateTime1,"미완",null);
         itemRepository.save(item);
 
         //when
@@ -48,8 +54,10 @@ public class ItemRepositoryTest {
     @Test
     public void findAllTest(){
         //give
-        Item item1 = new Item("숙제1","2024.01.20","미완",null);
-        Item item2 = new Item("숙제2","2024.01.20","미완",null);
+        LocalDateTime localDateTime1 = LocalDateTime.of(2024, 02, 27, 12, 32);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2024, 12, 28, 12, 32);
+        Item item1 = new Item("숙제1",localDateTime1,"미완",null);
+        Item item2 = new Item("숙제2",localDateTime2,"미완",null);
         itemRepository.save(item1);
         itemRepository.save(item2);
 
@@ -64,11 +72,13 @@ public class ItemRepositoryTest {
     @Test
     public void updateTest(){
         //give
-        Item item = new Item("숙제1","2024.01.20","미완",null);
+        LocalDateTime localDateTime1 = LocalDateTime.of(2024, 02, 27, 12, 32);
+        Item item = new Item("숙제1",localDateTime1,"미완",null);
         itemRepository.save(item);
 
         //when
-        Item updateItem = new Item("숙제1","2024.01.24","완",null);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2024, 12, 28, 12, 32);
+        Item updateItem = new Item("숙제1",localDateTime2,"완",null);
         itemRepository.update(item.getId(),updateItem);
 
         //then
@@ -81,7 +91,8 @@ public class ItemRepositoryTest {
     @Test
     public void deleteTest(){
         //give
-        Item item = new Item("숙제1","2024-01-20","미완",null);
+        LocalDateTime localDateTime1 = LocalDateTime.of(2024, 02, 27, 12, 32);
+        Item item = new Item("숙제1",localDateTime1,"미완",null);
         itemRepository.save(item);
         //when
         itemRepository.delete(item.getId());
@@ -90,4 +101,6 @@ public class ItemRepositoryTest {
         assertThat(itemList.size()).isEqualTo(0);
         assertThat(itemList).doesNotContain(item);
     }
+
+
 }

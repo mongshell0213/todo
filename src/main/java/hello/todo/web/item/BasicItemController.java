@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -86,7 +87,9 @@ public class BasicItemController {
      */
     @PostConstruct
     public void init(){
-        itemRepository.save(new Item("숙제 1","2024-01-24","NOT_FINISHED",null));
-        itemRepository.save(new Item("숙제 2","2024-01-28","FINISHED","대충 어디 어디 숙제라는 뜻"));
+        LocalDateTime localDateTime1 = LocalDateTime.of(2024, 02, 27, 12, 32);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2024, 12, 28, 12, 32);
+        itemRepository.save(new Item("숙제 1",localDateTime1,"NOT_FINISHED",null));
+        itemRepository.save(new Item("숙제 2",localDateTime2,"FINISHED","대충 어디 어디 숙제라는 뜻"));
     }
 }

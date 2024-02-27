@@ -29,7 +29,7 @@
     <div>
         <label for="endDate" th:text="#{label.item.endDate}">기한</label>
         <input type="text" id="endDate" name="endDate" class="form-control"
-               value="2024.01.24" th:value="${item.endDate}" readonly>
+               value="2024.01.24" th:value="${{item.endDate}}" readonly>
     </div>
     <div>
         <label for="finishType" th:text="#{label.item.finishType}">완료 여부</label>

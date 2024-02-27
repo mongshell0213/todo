@@ -41,7 +41,7 @@
             <tr th:each="item : ${items}">
                 <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">1</a></td>
                 <td><a href="item.html" th:href="@{|/basic/items/${item.id}|}" th:text="${item.work}">테스트1</a></td>
-                <td th:text="${item.endDate}">2024.01.20</td>
+                <td th:text="${{item.endDate}}">2024.01.20</td>
                 <td th:text="${item.finishType}">미완</td>
             </tr>
             </tbody>

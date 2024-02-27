@@ -34,7 +34,7 @@
         <div class="field-error" th:errors="*{work}"></div>
         <div>
             <label for="endDate" th:text="#{label.item.endDate}">기한</label>
-            <input type="date" th:field="*{endDate}" class="form-control" th:errorclass="field-error"
+            <input type="datetime-local" th:field="*{endDate}" class="form-control" th:errorclass="field-error"
                    value="2024.01.24" >
         </div>
         <div class="field-error" th:errors="*{endDate}"></div>
