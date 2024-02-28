@@ -28,7 +28,7 @@ public class LoginController {
     }
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute LoginForm loginForm, BindingResult result
-            , HttpServletRequest request, @RequestParam(defaultValue = "/basic/items")String redirectURL){
+            , HttpServletRequest request, @RequestParam(value = "redirectURL",defaultValue = "/basic/items")String redirectURL){
         log.info("loginForm={}",loginForm);
         Member loginMember = loginService.login(loginForm.getId(),loginForm.getPassWord());
         if(loginMember==null){

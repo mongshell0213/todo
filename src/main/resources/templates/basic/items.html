@@ -25,6 +25,12 @@
                     type="button" th:text="#{button.addTodo}">할 일 등록
             </button>
         </div>
+        <div class="col">
+            <button class="btn btn-secondary float-end"
+                    th:onclick="|location.href='@{/basic/items/download}'|"
+                    type="button">다운로드
+            </button>
+        </div>
     </div>
     <hr class="my-4">
     <div>

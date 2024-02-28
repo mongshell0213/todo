@@ -27,13 +27,6 @@ public class Item {
     private String finishType;
     private String note; //비고란
 
-    /*public Item(String work, String endDate, String finishType,String note){
-        this.work = work;
-        this.endDate = endDate;
-        this.finishType = finishType;
-        this.note = note;
-    }
-    */
     public Item(String work, LocalDateTime endDate, String finishType,String note){
         this.work = work;
         this.endDate = endDate;

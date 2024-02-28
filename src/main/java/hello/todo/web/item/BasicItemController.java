@@ -6,15 +6,31 @@ import hello.todo.domain.item.Item;
 import hello.todo.domain.member.Member;
 import hello.todo.web.login.SessionConst;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -38,6 +54,66 @@ public class BasicItemController {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item",item);
         return "basic/item";
+    }
+
+    //@GetMapping("/download")
+    public void downloadExcel(HttpServletResponse response) throws IOException{
+        List<Item> itemList = itemRepository.findAll();
+        Workbook workbook = new HSSFWorkbook();
+        Sheet sheet = workbook.createSheet("todo list");
+        int rowNo=0;
+
+        Row headerRow = sheet.createRow(rowNo++);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("할 일");
+        headerRow.createCell(2).setCellValue("기한");
+        headerRow.createCell(3).setCellValue("완료 여부");
+
+        for (Item item : itemList) {
+            Row row = sheet.createRow(rowNo++);
+            row.createCell(0).setCellValue(item.getId());
+            row.createCell(1).setCellValue(item.getWork());
+            row.createCell(2)
+                    .setCellValue(item.getEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            row.createCell(3).setCellValue(item.getFinishType());
+        }
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition","attachment;filename=todoList.xls");
+
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<InputStreamResource> downloadExcel2(HttpServletResponse response) throws IOException{
+        List<Item> itemList = itemRepository.findAll();
+        File tempXls = File.createTempFile("tempXls",".xls",new File("D:\\todo\\file"));
+        Workbook workbook = new HSSFWorkbook();
+        Sheet sheet = workbook.createSheet("todo list");
+        int rowNo=0;
+
+        Row headerRow = sheet.createRow(rowNo++);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("할 일");
+        headerRow.createCell(2).setCellValue("기한");
+        headerRow.createCell(3).setCellValue("완료 여부");
+
+        for (Item item : itemList) {
+            Row row = sheet.createRow(rowNo++);
+            row.createCell(0).setCellValue(item.getId());
+            row.createCell(1).setCellValue(item.getWork());
+            row.createCell(2)
+                    .setCellValue(item.getEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            row.createCell(3).setCellValue(item.getFinishType());
+        }
+
+        workbook.write(response.getOutputStream());
+        workbook.close();
+        tempXls.deleteOnExit();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=todoList.xls")
+                .contentType(MediaType.parseMediaType("ms-vnd/excel"))
+                .body(new InputStreamResource(new FileInputStream(tempXls)));
     }
 
     @GetMapping("/{itemId}/edit")
