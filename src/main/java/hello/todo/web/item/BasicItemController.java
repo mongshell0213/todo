@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +51,7 @@ public class BasicItemController {
     }
 
     @GetMapping("/{itemId}")
-    public String item(@PathVariable Long itemId,Model model){
+    public String item(@PathVariable(name="itemId") Long itemId,Model model){
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item",item);
         return "basic/item";
@@ -107,7 +108,7 @@ public class BasicItemController {
             row.createCell(3).setCellValue(item.getFinishType());
         }
 
-        workbook.write(response.getOutputStream());
+        workbook.write(new FileOutputStream(tempXls));
         workbook.close();
         tempXls.deleteOnExit();
         return ResponseEntity.ok()
@@ -117,13 +118,13 @@ public class BasicItemController {
     }
 
     @GetMapping("/{itemId}/edit")
-    public String editForm(@PathVariable Long itemId,Model model){
+    public String editForm(@PathVariable(name="itemId") Long itemId,Model model){
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item",item);
         return "basic/editForm";
     }
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute Item item
+    public String edit(@PathVariable(name="itemId") Long itemId, @Validated @ModelAttribute Item item
             ,BindingResult result){
         itemRepository.update(itemId,item);
         if(result.hasErrors())
@@ -141,13 +142,14 @@ public class BasicItemController {
     public String add(@Validated @ModelAttribute Item item, BindingResult result){
         if(result.hasErrors())
             return "basic/addForm";
+        log.info("item={}",item);
         itemRepository.save(item);
         return "redirect:/basic/items/"+item.getId(); //PRG 패턴 도입
         //return "basic/item"; //새로고침시 post가 재전송되는 문제
     }
 
     @GetMapping("/{itemId}/delete")
-    public String delete(@PathVariable Long itemId){
+    public String delete(@PathVariable(name="itemId") Long itemId){
         itemRepository.delete(itemId);
         return "redirect:/basic/items";
     }

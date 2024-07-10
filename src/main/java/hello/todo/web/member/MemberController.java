@@ -1,6 +1,7 @@
 package hello.todo.web.member;
 
 import hello.todo.domain.member.Member;
+import hello.todo.domain.member.MemberDBRepositoryV0;
 import hello.todo.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberRepository memberRepository;
+    //private final MemberRepository memberRepository;
+    private final MemberDBRepositoryV0 memberRepository;
 
     @GetMapping("/join")
     public String memberJoinForm(Model model){
