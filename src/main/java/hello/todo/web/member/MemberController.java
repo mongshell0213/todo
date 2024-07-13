@@ -2,6 +2,7 @@ package hello.todo.web.member;
 
 import hello.todo.domain.member.Member;
 import hello.todo.domain.member.MemberDBRepositoryV0;
+import hello.todo.domain.member.MemberDBRepositoryV1;
 import hello.todo.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
     //private final MemberRepository memberRepository;
-    private final MemberDBRepositoryV0 memberRepository;
+    //private final MemberDBRepositoryV0 memberRepository;
+    private final MemberDBRepositoryV1 memberRepository;
 
     @GetMapping("/join")
     public String memberJoinForm(Model model){
@@ -31,6 +33,7 @@ public class MemberController {
     @PostMapping("/join")
     public String memberJoin(@Validated @ModelAttribute Member member, BindingResult result){
         if(memberRepository.findById(member.getId()).orElse(null)!=null){
+        //if(memberRepository.findById(member.getId()).get() != null){
             result.rejectValue("id","overlap","아이디가 중복됩니다.");
         }
         if(result.hasErrors()){
