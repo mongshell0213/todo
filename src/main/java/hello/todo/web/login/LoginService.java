@@ -1,9 +1,6 @@
 package hello.todo.web.login;
 
-import hello.todo.domain.member.Member;
-import hello.todo.domain.member.MemberDBRepositoryV0;
-import hello.todo.domain.member.MemberDBRepositoryV1;
-import hello.todo.domain.member.MemberRepository;
+import hello.todo.domain.member.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +9,8 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     //private final MemberRepository memberRepository;
     //private final MemberDBRepositoryV0 memberRepository;
-    private final MemberDBRepositoryV1 memberRepository;
+    //private final MemberDBRepositoryV1 memberRepository;
+    private final MemberDBRepositoryV2 memberRepository;
 
     public Member login(String id,String passWord){
         return memberRepository.findById(id)

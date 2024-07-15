@@ -1,19 +1,16 @@
 package hello.todo.web.member;
 
-import hello.todo.domain.member.Member;
-import hello.todo.domain.member.MemberDBRepositoryV0;
-import hello.todo.domain.member.MemberDBRepositoryV1;
-import hello.todo.domain.member.MemberRepository;
+import hello.todo.domain.member.*;
+import hello.todo.web.login.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 
 @Slf4j
 @Controller
@@ -22,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     //private final MemberRepository memberRepository;
     //private final MemberDBRepositoryV0 memberRepository;
-    private final MemberDBRepositoryV1 memberRepository;
+    //private final MemberDBRepositoryV1 memberRepository;
+    private final MemberDBRepositoryV2 memberRepository;
 
     @GetMapping("/join")
     public String memberJoinForm(Model model){
@@ -43,6 +41,19 @@ public class MemberController {
 
         memberRepository.save(member);
         //log.info("SaveMember={}",memberRepository.findById(member.getId()).getId());
+        return "redirect:/";
+    }
+    @GetMapping("/update")
+    public String memberUpdateForm(@SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("updateMember",new Member());
+        return "members/updateForm";
+    }
+    @PostMapping("/update")
+    public String memberUpdate(@ModelAttribute("updateMember") Member updateMember,
+                               @SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member loginMember
+                                ,Model model) throws SQLException {
+        memberRepository.updateMember(loginMember.getId(), updateMember);
         return "redirect:/";
     }
 }

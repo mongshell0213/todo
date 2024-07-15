@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <style>
+        .container {
+        max-width: 560px;
+        }
+        .field-error{
+            border-color: #dc3545;
+            color : #dc3545
+        }
+    </style>
+</head>
+<body>
+<h3 th:text="|환영합니다. ${loginMember.id}|"></h3>
+<div class="container">
+    <form action="updateForm.html" th:action th:object="${updateMember}" method="post">
+        <div>
+            <label for="id" th:text="#{label.member.id}">아이디</label>
+            <input type="text" th:field="*{id}" class="form-control" th:errorclass="field-error"
+                   placeholder="변경할 아이디를 입력하세요." th:placeholder="#{input.id.placeholder}">
+        </div>
+        <div class="field-error" th:errors="*{id}">아이디 오류</div>
+        <div>
+            <label for="passWord" th:text="#{label.member.password}">패스워드</label>
+            <input type="password" th:field="*{passWord}" class="form-control" th:errorclass="field-error"
+                   placeholder="비밀번호를 입력하세요." th:placeholder="#{input.password.placeholder}">
+        </div>
+        <div class="field-error" th:errors="*{passWord}">비밀번호 오류</div>
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">정보 수정</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='index.html'"
+                        th:onclick="|location.href='@{/}'|"
+                        type="button" th:text="#{button.cancel}">취소</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
